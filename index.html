@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="/Azure.Functions.OpenApi/assets/css/style.css?v=d449616076e8a96a6b87025e21df790b15272a08">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>OpenAPI/Swagger Source Generator for C# Azure Functions | Azure.Functions.OpenApi</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="OpenAPI/Swagger Source Generator for C# Azure Functions" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A zero-code OpenAPI (Swagger) basic generator for Azure Functions" />
+<meta property="og:description" content="A zero-code OpenAPI (Swagger) basic generator for Azure Functions" />
+<meta property="og:site_name" content="Azure.Functions.OpenApi" />
+<script type="application/ld+json">
+{"@type":"WebSite","url":"/Azure.Functions.OpenApi/","headline":"OpenAPI/Swagger Source Generator for C# Azure Functions","description":"A zero-code OpenAPI (Swagger) basic generator for Azure Functions","name":"Azure.Functions.OpenApi","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/devlooped/Azure.Functions.OpenApi">View on GitHub</a>
+
+          <h1 id="project_title">Azure.Functions.OpenApi</h1>
+          <h2 id="project_tagline">A zero-code OpenAPI (Swagger) basic generator for Azure Functions</h2>
+
+          
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1 id="-openapiswagger-source-generator-for-c-azure-functions"><img src="https://raw.githubusercontent.com/devlooped/Azure.Functions.OpenApi/main/assets/img/icon-32.png" alt="Icon" /> OpenAPI/Swagger Source Generator for C# Azure Functions</h1>
+
+<p><a href="https://www.nuget.org/packages/Devlooped.Azure.Functions.OpenApi"><img src="https://img.shields.io/nuget/v/Devlooped.Azure.Functions.OpenApi.svg?color=royalblue" alt="Version" /></a>
+<a href="https://www.nuget.org/packages/Devlooped.Azure.Functions.OpenApi"><img src="https://img.shields.io/nuget/dt/Devlooped.Azure.Functions.OpenApi.svg?color=green" alt="Downloads" /></a>
+<a href="https://github.com/devlooped/Azure.Functions.OpenApi/blob/main/license.txt"><img src="https://img.shields.io/github/license/devlooped/Azure.Functions.OpenApi.svg?color=blue" alt="License" /></a>
+<a href="https://github.com/devlooped/Azure.Functions.OpenApi/actions"><img src="https://github.com/devlooped/Azure.Functions.OpenApi/workflows/build/badge.svg?branch=main" alt="Build" /></a></p>
+
+<p>A zero-code basic OpenAPI (Swagger) generator for C# Azure Functions.</p>
+
+<h1 id="usage">Usage</h1>
+
+<p>Just install the package and run the app. By default, you will get an endpoint 
+<code class="language-plaintext highlighter-rouge">openapi</code> that returns the Swagger UI for browing your API, as well as an endpoint
+with the standard <code class="language-plaintext highlighter-rouge">swagger.json</code> file. The generated swagger file will contain all 
+HTTP-triggered functions in the compilation.</p>
+
+<p><img src="https://raw.githubusercontent.com/devlooped/Azure.Functions.OpenApi/main/assets/img/endpoints.png" alt="endpoints screenshot" /></p>
+
+<p>This assumes the <code class="language-plaintext highlighter-rouge">routePrefix</code> has been configured as empty (to override the default of <code class="language-plaintext highlighter-rouge">/api</code>) 
+in <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-output#hostjson-settings">host.json</a>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+  </span><span class="nl">"extensions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"http"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"routePrefix"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Opening the <code class="language-plaintext highlighter-rouge">openapi</code> endpoint renders the SwaggerUI:</p>
+
+<p><img src="https://raw.githubusercontent.com/devlooped/Azure.Functions.OpenApi/main/assets/img/swaggerui.png" alt="swagger UI screenshot" /></p>
+
+<p>The generated <code class="language-plaintext highlighter-rouge">swagger.json</code> can be inspected in the project’s intermediate output path 
+(by default, <code class="language-plaintext highlighter-rouge">obj\Debug\[TFM]\openapi\v2\swagger.json</code>).</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">swagger.json</code> as well as the function endpoints are generated at build-time by a 
+<a href="https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview">C# source generator</a>. 
+As such, you can inspect the generated code by setting the <code class="language-plaintext highlighter-rouge">EmitCompilerGeneratedFiles</code> project 
+property to <code class="language-plaintext highlighter-rouge">true</code> like:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;PropertyGroup&gt;</span>
+    <span class="nt">&lt;EmitCompilerGeneratedFiles&gt;</span>true<span class="nt">&lt;/EmitCompilerGeneratedFiles&gt;</span>
+  <span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre></div></div>
+
+<p>This will emit the generated functions source files under 
+<code class="language-plaintext highlighter-rouge">$(IntermediateOutputPath)\generated\Devlooped.Azure.Functions.OpenApi\SourceGenerator</code>:</p>
+
+<p><img src="https://raw.githubusercontent.com/devlooped/Azure.Functions.OpenApi/main/assets/img/sourcegenerated.png" alt="generated sources screenshot" /></p>
+
+<h2 id="customization">Customization</h2>
+
+<p>There are several ways of customizing the generation, all driven by MSBuild.</p>
+
+<p>The main generation driver is an MSBuild item <code class="language-plaintext highlighter-rouge">OpenApi</code>, which contains various 
+pieces of metadata to tweak the output. Its item definition is as follows:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;ItemDefinitionGroup&gt;</span>
+    <span class="nt">&lt;OpenApi&gt;</span>
+      <span class="nt">&lt;Title</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;Description</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;Version</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;Route</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;Url</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;SchemaVersion&gt;</span>2<span class="nt">&lt;/SchemaVersion&gt;</span>
+    <span class="nt">&lt;/OpenApi&gt;</span>
+  <span class="nt">&lt;/ItemDefinitionGroup&gt;</span>
+
+</code></pre></div></div>
+
+<p>If no <code class="language-plaintext highlighter-rouge">&lt;OpenApi Include=".."&gt;</code> is provided, one is automatically added, with the default values applied.</p>
+
+<p>The default values are:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Title</code>: first with a non-empty value from <code class="language-plaintext highlighter-rouge">$(AssemblyTitle)</code>, <code class="language-plaintext highlighter-rouge">$(Product)</code>, <code class="language-plaintext highlighter-rouge">$(ProductName)</code>, <code class="language-plaintext highlighter-rouge">$(Title)</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Description</code>: <code class="language-plaintext highlighter-rouge">$(Description)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Version</code>: first with non-empty value from <code class="language-plaintext highlighter-rouge">$(Version)</code>, <code class="language-plaintext highlighter-rouge">$(InformationalVersion)</code>, <code class="language-plaintext highlighter-rouge">$(AssemblyVersion)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Route</code>: <code class="language-plaintext highlighter-rouge">/openapi/v%(SchemaVersion)/swagger.json</code>, with <code class="language-plaintext highlighter-rouge">SchemaVersion</code> being <code class="language-plaintext highlighter-rouge">2</code> by default.</li>
+  <li><code class="language-plaintext highlighter-rouge">Url</code>: <code class="language-plaintext highlighter-rouge">/api</code> or <code class="language-plaintext highlighter-rouge">extensions.http.routePrefix</code> in <code class="language-plaintext highlighter-rouge">host.json</code> if set to a non-empty value, <code class="language-plaintext highlighter-rouge">/</code> otherwise.</li>
+</ul>
+
+<h1 id="dogfooding">Dogfooding</h1>
+
+<p><a href="https://pkg.kzu.io/index.json"><img src="https://img.shields.io/endpoint?url=https://shields.kzu.io/vpre/Devlooped.Azure.Functions.OpenApi/main&amp;label=nuget.ci&amp;color=brightgreen" alt="CI Version" /></a>
+<a href="https://github.com/devlooped/Azure.Functions.OpenApi/actions"><img src="https://github.com/devlooped/Azure.Functions.OpenApi/workflows/build/badge.svg?branch=main" alt="Build" /></a></p>
+
+<p>We also produce CI packages from branches and pull requests so you can dogfood builds as quickly as they are produced.</p>
+
+<p>The CI feed is <code class="language-plaintext highlighter-rouge">https://pkg.kzu.io/index.json</code>.</p>
+
+<p>The versioning scheme for packages is:</p>
+
+<ul>
+  <li>PR builds: <em>42.42.42-pr</em><code class="language-plaintext highlighter-rouge">[NUMBER]</code></li>
+  <li>Branch builds: <em>42.42.42-</em><code class="language-plaintext highlighter-rouge">[BRANCH]</code>.<code class="language-plaintext highlighter-rouge">[COMMITS]</code></li>
+</ul>
+
+<h2 id="sponsors">Sponsors</h2>
+
+<p><a href="https://github.com/sponsors/devlooped"><img src="https://raw.githubusercontent.com/devlooped/oss/main/assets/images/sponsors.svg" alt="sponsored" /></a> <a href="https://github.com/clarius"><img src="https://raw.githubusercontent.com/clarius/branding/main/logo/byclarius.svg" alt="clarius" /></a><a href="https://github.com/clarius"><img src="https://raw.githubusercontent.com/clarius/branding/main/logo/logo.svg" alt="clarius" /></a></p>
+
+<p><em><a href="https://github.com/sponsors/devlooped">get mentioned here too</a>!</em></p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">Azure.Functions.OpenApi maintained by <a href="https://github.com/devlooped">devlooped</a></p>
+        
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
